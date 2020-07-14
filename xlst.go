@@ -18,6 +18,7 @@ var (
 	rangeRgx    = regexp.MustCompile(`\{\{\s*range\s+(\w+)\s*\}\}`)
 	rangeEndRgx = regexp.MustCompile(`\{\{\s*end\s*\}\}`)
 	numRgx      = regexp.MustCompile(`^#-?[0-9]+(\.[0-9]+)?`)
+	currRgx     = regexp.MustCompile(`^\$-?[0-9]+(\.[0-9]+)?`)
 )
 
 // Xlst Represents template struct
@@ -215,6 +216,14 @@ func renderCell(cell *xlsx.Cell, ctx interface{}) error {
 			return err
 		}
 		cell.SetFloat(f)
+
+	} else if currRgx.MatchString(out) {
+		f, err := strconv.ParseFloat(strings.TrimPrefix(out, "$"), 64)
+		if err != nil {
+			return err
+		}
+		cell.SetFloatWithFormat(f, `_("$"* #,##0.00_);_("$"* \(#,##0.00\);_("$"* "-"??_);_(@_)`)
+
 	} else {
 		cell.Value = out
 	}
