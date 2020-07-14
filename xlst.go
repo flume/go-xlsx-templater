@@ -211,14 +211,14 @@ func renderCell(cell *xlsx.Cell, ctx interface{}) error {
 		return err
 	}
 	if numRgx.MatchString(out) {
-		f, err := strconv.ParseFloat(strings.TrimPrefix(out, "#"), 64)
+		f, err := strconv.ParseFloat(strings.ReplaceAll(out, "#", ""), 64)
 		if err != nil {
 			return err
 		}
 		cell.SetFloat(f)
 
 	} else if currRgx.MatchString(out) {
-		f, err := strconv.ParseFloat(strings.TrimPrefix(out, "$"), 64)
+		f, err := strconv.ParseFloat(strings.ReplaceAll(out, "$", ""), 64)
 		if err != nil {
 			return err
 		}
