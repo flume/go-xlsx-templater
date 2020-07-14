@@ -1,4 +1,4 @@
-module github.com/ivahaev/go-xlsx-templater
+module github.com/flume/go-xlsx-templater
 
 go 1.13
 

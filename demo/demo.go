@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/ivahaev/go-xlsx-templater"
+	"github.com/flume/go-xlsx-templater"
 )
 
 func main() {
